@@ -1,0 +1,25 @@
+body {
+    background-color: #1E1E1E;
+    font-family: Arial, sans-serif;
+    color: white;
+
+  }
+  h1 {
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .container {
+    margin-top: 40px;
+  }
+  #eliminarBtn {
+    background-color: #74aa10;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    margin-top: 15px;
+    cursor: pointer;
+  }
+  #eliminarBtn:hover {
+    background-color: #0A5C0A;
+  }
