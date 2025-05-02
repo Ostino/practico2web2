@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         div.querySelector(".genre-card").addEventListener("click", () => {
-          //window.location.href = `editartista.html?id=${artista.id}`;
+          window.location.href = `albums.html?artistaId=${artista.id}`;
         });
         container.appendChild(div);
       });

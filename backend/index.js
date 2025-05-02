@@ -4,9 +4,12 @@ const app = express();
 const sequelize = require('./config/database');
 const generoRoutes = require('./routes/genero.routes');
 const artistaRoutes = require('./routes/artista.routes');
+const albumRoutes = require('./routes/album.routes');
+
 const path = require('path');
 
 app.use(cors()); // Permite que el frontend pueda hacer peticiones
+const Album = require('./models/album.model'); // Ajusta la ruta si es distinta
 
 const PORT = 3000;
 async function iniciarServidor() {
@@ -36,4 +39,5 @@ async function iniciarServidor() {
   app.use('/api/generos', generoRoutes);
   app.use('/imagenes', express.static(path.join(__dirname, 'ImagenesBackend')));
   app.use('/api/artistas', artistaRoutes);
+  app.use('/api/albumes', albumRoutes);
 

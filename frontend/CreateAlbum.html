@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Album</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/crudgen.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>Registrar Album</h1>
+    <form id="formAlbum" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre del Album:</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" required>
+      </div>    
+
+      <div class="mb-3">
+        <label for="imagen" class="form-label">Imagen del Album:</label>
+        <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+  </div>
+
+  <script src="js/CreateAlbum.js"></script>
+</body>
+</html>
