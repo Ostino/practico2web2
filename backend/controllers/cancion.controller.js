@@ -1,33 +1,25 @@
 const fs = require('fs');
 const path = require('path');
 const Cancion = require('../models/cancion.model');
+const Album = require('../models/album.model');
 
+// Crear canción
 const crearCancion = async (req, res) => {
   try {
-    const { albumId } = req.body;
-
-    if (!req.file) {
-      return res.status(400).json({ mensaje: 'No se proporcionó archivo mp3' });
-    }
+    const { nombre, albumId } = req.body;
+    if (!req.file) return res.status(400).json({ mensaje: 'Archivo MP3 requerido' });
 
     const extension = path.extname(req.file.originalname);
-    const nombreBase = path.basename(req.file.originalname, extension);
+    const nuevoNombreArchivo = `${nombre}_${albumId}${extension}`;
+    const nuevaRuta = path.join('cancionesBackend', nuevoNombreArchivo);
 
-    // Creamos el registro sin el nombre aún para obtener el ID
+    fs.renameSync(req.file.path, nuevaRuta); // Renombra el archivo
+
     const nuevaCancion = await Cancion.create({
-      archivo: '', // temporal
+      nombre,
+      archivo: nuevoNombreArchivo,
       albumId
     });
-
-    const nuevoNombre = `${nombreBase}_${nuevaCancion.id}${extension}`;
-    const nuevaRuta = path.join(req.file.destination, nuevoNombre);
-
-    // Renombrar el archivo
-    fs.renameSync(req.file.path, nuevaRuta);
-
-    // Actualizar con el nuevo nombre
-    nuevaCancion.archivo = nuevoNombre;
-    await nuevaCancion.save();
 
     res.status(201).json(nuevaCancion);
   } catch (error) {
@@ -35,90 +27,116 @@ const crearCancion = async (req, res) => {
   }
 };
 
-const obtenerCancionesPorAlbum = async (req, res) => {
+// Obtener todas las canciones
+const obtenerCanciones = async (req, res) => {
   try {
-    const { albumId } = req.params;
-    const canciones = await Cancion.findAll({ where: { albumId } });
+    const canciones = await Cancion.findAll({ include: Album });
     res.json(canciones);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al obtener canciones', error });
   }
 };
 
-const eliminarCancion = async (req, res) => {
+// Obtener una canción por ID
+const obtenerCancionPorId = async (req, res) => {
   try {
-    const cancion = await Cancion.findByPk(req.params.id);
+    const cancion = await Cancion.findByPk(req.params.id, { include: Album });
+    if (!cancion) return res.status(404).json({ mensaje: 'Canción no encontrada' });
+    res.json(cancion);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al obtener canción', error });
+  }
+};
+
+// Actualizar canción
+const actualizarCancion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const cancion = await Cancion.findByPk(id);
 
     if (!cancion) {
       return res.status(404).json({ mensaje: 'Canción no encontrada' });
     }
 
-    const ruta = path.join(__dirname, '../archivosMp3', cancion.archivo);
-    if (fs.existsSync(ruta)) {
-      fs.unlinkSync(ruta);
+    const nuevoNombre = req.body.nombre || cancion.nombre;
+    const archivoNuevo = req.file;
+    let nombreArchivoFinal = cancion.archivo; // por defecto, no cambia
+
+    // Si se cambia el archivo .mp3
+    if (archivoNuevo) {
+      // Borrar el archivo viejo
+      const rutaVieja = path.join(__dirname, '..', 'cancionesBackend', cancion.archivo);
+      if (fs.existsSync(rutaVieja)) {
+        fs.unlinkSync(rutaVieja);
+      }
+
+      // Renombrar archivo a "nombre_IdAlbum.mp3"
+      const extension = path.extname(archivoNuevo.originalname); // .mp3
+      nombreArchivoFinal = `${nuevoNombre}_${cancion.albumId}${extension}`;
+      const rutaNueva = path.join(__dirname, '..', 'cancionesBackend', nombreArchivoFinal);
+      fs.renameSync(archivoNuevo.path, rutaNueva);
+    }
+    // Si no se cambió el archivo, pero se cambió el nombre
+    else if (nuevoNombre !== cancion.nombre) {
+      const viejaRuta = path.join(__dirname, '..', 'cancionesBackend', cancion.archivo);
+      const extension = path.extname(cancion.archivo);
+      nombreArchivoFinal = `${nuevoNombre}_${cancion.albumId}${extension}`;
+      const nuevaRuta = path.join(__dirname, '..', 'cancionesBackend', nombreArchivoFinal);
+
+      if (fs.existsSync(viejaRuta)) {
+        fs.renameSync(viejaRuta, nuevaRuta);
+      }
     }
 
-    await cancion.destroy();
+    // Actualizar los datos en la base
+    await cancion.update({
+      nombre: nuevoNombre,
+      archivo: nombreArchivoFinal
+    });
 
+    res.status(200).json(cancion);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: 'Error al actualizar la canción' });
+  }
+};
+
+const obtenerCancionesPorAlbum = async (req, res) => {
+  try {
+    const { albumId } = req.params;
+
+    const canciones = await Cancion.findAll({
+      where: { albumId }
+    });
+
+    res.json(canciones);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al obtener canciones del álbum', error });
+  }
+};
+
+
+// Eliminar canción
+const eliminarCancion = async (req, res) => {
+  try {
+    const cancion = await Cancion.findByPk(req.params.id);
+    if (!cancion) return res.status(404).json({ mensaje: 'Canción no encontrada' });
+
+    const ruta = path.join('cancionesBackend', cancion.archivo);
+    if (fs.existsSync(ruta)) fs.unlinkSync(ruta);
+
+    await cancion.destroy();
     res.json({ mensaje: 'Canción eliminada' });
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al eliminar canción', error });
   }
 };
-const obtenerCancionPorId = async (req, res) => {
-    try {
-      const cancion = await Cancion.findByPk(req.params.id);
-      if (!cancion) {
-        return res.status(404).json({ mensaje: 'Canción no encontrada' });
-      }
-      res.json(cancion);
-    } catch (error) {
-      res.status(500).json({ mensaje: 'Error al obtener canción', error });
-    }
-  };
-  const editarCancion = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const cancion = await Cancion.findByPk(id);
-  
-      if (!cancion) {
-        return res.status(404).json({ mensaje: 'Canción no encontrada' });
-      }
-  
-      // Si hay nuevo archivo .mp3, lo renombramos
-      if (req.file) {
-        const extension = path.extname(req.file.originalname);
-        const nuevoNombre = `${path.parse(req.file.originalname).name}_${id}${extension}`;
-        const nuevaRuta = path.join(req.file.destination, nuevoNombre);
-  
-        // Renombrar el archivo subido
-        fs.renameSync(req.file.path, nuevaRuta);
-  
-        // Eliminar archivo anterior si existe y es distinto
-        if (cancion.archivo && cancion.archivo !== nuevoNombre) {
-          const rutaAntigua = path.join(req.file.destination, cancion.archivo);
-          if (fs.existsSync(rutaAntigua)) {
-            fs.unlinkSync(rutaAntigua);
-          }
-        }
-  
-        cancion.archivo = nuevoNombre;
-      }
-  
-      // Guardar cambios
-      await cancion.save();
-      res.json({ mensaje: 'Canción actualizada correctamente', cancion });
-  
-    } catch (error) {
-      res.status(500).json({ mensaje: 'Error al editar la canción', error });
-    }
-  };
-  
-  
+
 module.exports = {
   crearCancion,
-  obtenerCancionesPorAlbum,
-  eliminarCancion,
+  obtenerCanciones,
   obtenerCancionPorId,
-  editarCancion 
+  actualizarCancion,
+  eliminarCancion,
+  obtenerCancionesPorAlbum
 };

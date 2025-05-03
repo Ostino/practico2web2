@@ -72,26 +72,45 @@ const actualizarAlbum = async (req, res) => {
     const album = await Album.findByPk(req.params.id);
     if (!album) return res.status(404).json({ mensaje: 'Álbum no encontrado' });
 
-    const { nombre, artistaId } = req.body;
+    const nuevoNombre = req.body.nombre || album.nombre;
+    const nuevoArtistaId = req.body.artistaId || album.artistaId;
+    const nuevaImagen = req.file;
 
-    if (nombre) album.nombre = nombre;
-    if (artistaId) album.artistaId = artistaId;
+    let nombreImagenFinal = album.imagen; // nombre actual por defecto
 
-    if (req.file) {
-      // Borrar imagen anterior
+    // Si hay una nueva imagen
+    if (nuevaImagen) {
+      // Borrar la imagen vieja
       const rutaVieja = path.join('imagenesBackend', album.imagen);
       if (fs.existsSync(rutaVieja)) fs.unlinkSync(rutaVieja);
 
-      const extension = path.extname(req.file.originalname);
-      const nuevoNombre = `${album.nombre}_${album.artistaId}${extension}`;
-      const rutaNueva = path.join('imagenesBackend', nuevoNombre);
-
-      fs.renameSync(req.file.path, rutaNueva);
-      album.imagen = nuevoNombre;
+      // Guardar con nuevo nombre
+      const extension = path.extname(nuevaImagen.originalname);
+      nombreImagenFinal = `${nuevoNombre}_${nuevoArtistaId}${extension}`;
+      const rutaNueva = path.join('imagenesBackend', nombreImagenFinal);
+      fs.renameSync(nuevaImagen.path, rutaNueva);
     }
+
+    // Si solo cambió el nombre (y no se envió nueva imagen)
+    else if (nuevoNombre !== album.nombre || nuevoArtistaId !== album.artistaId) {
+      const rutaVieja = path.join('imagenesBackend', album.imagen);
+      const extension = path.extname(album.imagen);
+      nombreImagenFinal = `${nuevoNombre}_${nuevoArtistaId}${extension}`;
+      const rutaNueva = path.join('imagenesBackend', nombreImagenFinal);
+
+      if (fs.existsSync(rutaVieja)) {
+        fs.renameSync(rutaVieja, rutaNueva);
+      }
+    }
+
+    // Actualizar los datos en el modelo
+    album.nombre = nuevoNombre;
+    album.artistaId = nuevoArtistaId;
+    album.imagen = nombreImagenFinal;
 
     await album.save();
     res.json(album);
+
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al actualizar álbum', error });
   }

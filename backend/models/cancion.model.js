@@ -1,16 +1,21 @@
+// models/cancion.model.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+const sequelize = require('../config/database');
 const Album = require('./album.model');
 
 const Cancion = sequelize.define('Cancion', {
   id: {
     type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    primaryKey: true
+  },
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   archivo: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false // el nombre del archivo .mp3
   },
   albumId: {
     type: DataTypes.INTEGER,
@@ -19,11 +24,15 @@ const Cancion = sequelize.define('Cancion', {
       model: Album,
       key: 'id'
     },
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE' // Esto hace que si se elimina el álbum, se eliminen sus canciones
   }
+}, {
+  tableName: 'canciones',
+  timestamps: false
 });
 
-Album.hasMany(Cancion, { foreignKey: 'albumId', onDelete: 'CASCADE' });
-Cancion.belongsTo(Album, { foreignKey: 'albumId' });
-
+// Relación explícita (opcional si ya la tienes en otro lado)
+Album.hasMany(Cancion, {foreignKey: 'albumId', onDelete: 'CASCADE'
+});
+Cancion.belongsTo(Album, {foreignKey: 'albumId'});
 module.exports = Cancion;

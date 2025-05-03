@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <h5>${album.nombre}</h5>
             <div class="d-grid gap-2 mt-3">
             <button class="btn btn-primary" onclick="window.location.href='editalbum.html?albumId=${album.id}'">Editar Album</button>
-            <button class="btn btn-secondary" onclick="window.location.href='cancionesAdm.html?albumId=${album.id}'">Ver Canciones</button>
-            <button class="btn btn-secondary" onclick="window.location.href='CreateCanciones.html?albumId=${album.id}'">Añadir Canciones</button>
+            <button class="btn btn-secondary" onclick="window.location.href='cancionAdm.html?albumId=${album.id}'">Ver Canciones</button>
+            <button class="btn btn-secondary" onclick="window.location.href='CreateCancion.html?albumId=${album.id}'">Añadir Canciones</button>
             </div>
           </div>
         `;
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   
     } catch (err) {
       console.error("Error al cargar álbumes:", err);
-      container.innerHTML = "<p>Error al cargar los álbumes.</p>";
+      container.innerHTML = "<p>No hay albums que mostrar.</p>";
     }
   });
   
