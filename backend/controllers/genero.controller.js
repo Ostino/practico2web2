@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const GeneroMusical = require('../models/genero.model');
+const Artista = require('../models/artista.model')
 
 const crearGenero = async (req, res) => {
   try {
@@ -85,19 +86,37 @@ const actualizarGenero = async (req, res) => {
 
 const eliminarGenero = async (req, res) => {
   try {
-    const genero = await GeneroMusical.findByPk(req.params.id);
+    const idGenero = parseInt(req.params.id);
+
+    // No se puede borrar el género pivote
+    if (idGenero === 7) {
+      return res.status(400).json({ mensaje: 'No se puede eliminar el género pivote (ID 7)' });
+    }
+
+    const genero = await GeneroMusical.findByPk(idGenero);
     if (!genero) {
       return res.status(404).json({ mensaje: 'Género no encontrado' });
     }
 
+    // Buscar artistas que tienen este género
+    const artistas = await Artista.findAll({ where: { generoId: idGenero } });
+
+    // Reemplazar por el género pivote (ID 7)
+    for (const artista of artistas) {
+      artista.generoId = 7;
+      await artista.save();
+    }
+
+    // Borrar imagen si existe
     const rutaImagen = path.join('imagenesBackend', genero.nombreDeImagen);
     if (fs.existsSync(rutaImagen)) {
       fs.unlinkSync(rutaImagen);
     }
 
+    // Eliminar género
     await genero.destroy();
 
-    res.json({ mensaje: 'Género eliminado y su imagen ha sido borrada' });
+    res.json({ mensaje: 'Género eliminado, artistas actualizados y su imagen ha sido borrada' });
   } catch (error) {
     console.error('Error al eliminar género:', error);
     res.status(500).json({ mensaje: 'Error interno del servidor' });
