@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         container.innerHTML = ""; // Limpia el contenido anterior si lo hubiera
   
         generos.forEach(genero => {
+          if (genero.id === 7) return;
           const card = document.createElement("div");
           card.className = "col-6 col-md-4 col-lg-3";
   
