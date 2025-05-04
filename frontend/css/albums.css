@@ -1,6 +1,6 @@
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: 		#1E1E1E ; /* fondo gris claro */
+  background-color: 		#1E1E1E ; 
   color:aliceblue;
 }
 .container {
@@ -8,7 +8,7 @@ body {
   padding-bottom: 20px;
 }
 .header-personalizado {
-  background-color: #1E1E1E; /* azul oscuro */
+  background-color: #1E1E1E; 
   position: relative;
   z-index: 1;
 }
@@ -38,7 +38,7 @@ body {
   min-width: 180px;
   cursor: pointer;
   transition: transform 0.3s;
-  background-color: rgba(255, 255, 255, 0.1); /* fondo blanco con opacidad */
+  background-color: rgba(255, 255, 255, 0.1); 
   border: none;
   color: aliceblue;
 }
@@ -52,12 +52,10 @@ body {
   object-fit: cover;
 }
 
-/* Oculta scrollbar horizontal */
 #albumesContainer::-webkit-scrollbar {
   display: none;
 }
 
-/* Estilo para el header del modal */
 .modal-header {
   background-color: #1E1E1E;
   color: aliceblue;
@@ -72,13 +70,13 @@ body {
   filter: invert(1);
 }
 .card {
-  background-color: rgba(255, 255, 255, 0.1); /* blanco con 10% de opacidad */
-  border: none; /* opcional: quita bordes si lo ves mejor visualmente */
-  color: aliceblue; /* opcional: mejora contraste si el fondo es oscuro */
+  background-color: rgba(255, 255, 255, 0.1); 
+  border: none; 
+  color: aliceblue; 
 }
 .modal-body {
   background: linear-gradient(to right, rgba(144, 197, 90, 0.2), rgba(255, 241, 75, 0.2)), #000000cc;
-  color: aliceblue; /* si quieres que el texto sea blanco para mayor contraste 6060d6  */
+  color: aliceblue; 
 }
 .modal-footer {
   border-top: none;
@@ -90,11 +88,11 @@ body {
 }
 .footer-con-imagen {
   position: relative;
-  height: 60px; /* Ajusta según el tamaño de la imagen */
+  height: 60px; 
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  background-color: #1E1E1E; /* Opcional, o transparente */
+  background-color: #1E1E1E;
 }
 
 .footer-con-imagen img {
