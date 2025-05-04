@@ -1,36 +1,81 @@
 body {
-    background-color: #f8f9fa;
-  }
+  font-family: 'Roboto', sans-serif;
+  background-color: 		#1E1E1E ; /* fondo gris claro */
+  color:aliceblue;
+}
+.container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.header-personalizado {
+  background-color: #1E1E1E; /* azul oscuro */
+  position: relative;
+  z-index: 1;
+}
+.nav-links a:hover {
+  text-decoration: underline;
+}
+.neon-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background-color: #15ffc4;
+  box-shadow: 0 0 10px #15ffc4;
+}
+#albumesContainer {
+  display: flex;
+  overflow-x: auto;
+  padding: 20px;
+  gap: 20px;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
-  #albumesContainer {
-    display: flex;
-    overflow-x: auto;
-    padding: 20px;
-    gap: 20px;
-    scroll-behavior: smooth;
-  }
+.album-card {
+  min-width: 180px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  background-color: rgba(255, 255, 255, 0.1); /* fondo blanco con opacidad */
+  border: none;
+  color: white;
+}
 
-  .album-card {
-    min-width: 180px;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.album-card:hover {
+  transform: scale(1.05);
+}
 
-  .album-card:hover {
-    transform: scale(1.05);
-  }
+.album-card img {
+  height: 180px;
+  object-fit: cover;
+}
 
-  .album-card img {
-    height: 180px;
-    object-fit: cover;
-  }
+/* Oculta scrollbar horizontal */
+#albumesContainer::-webkit-scrollbar {
+  display: none;
+}
 
-  /* Oculta scrollbar horizontal */
-  #albumesContainer::-webkit-scrollbar {
-    display: none;
-  }
-  #albumesContainer {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  /*artistaId
+/* Estilo para el header del modal */
+.modal-header {
+  background-color: #1E1E1E;
+  color: white;
+}
+
+.modal-header .modal-title {
+  color: white;
+}
+
+.modal-header .btn-close {
+  filter: invert(1);
+}
+.card {
+  background-color: rgba(255, 255, 255, 0.1); /* blanco con 10% de opacidad */
+  border: none; /* opcional: quita bordes si lo ves mejor visualmente */
+  color: white; /* opcional: mejora contraste si el fondo es oscuro */
+}
+.modal-body {
+  background: linear-gradient(to right, rgba(144, 197, 90, 0.2), rgba(255, 241, 75, 0.2)), #000000cc;
+  color: white; /* si quieres que el texto sea blanco para mayor contraste */
+}

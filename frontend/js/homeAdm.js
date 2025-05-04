@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
               <img src="http://localhost:3000/imagenes/${genero.nombreDeImagen}" alt="${genero.nombre}">
               <h5>${genero.nombre}</h5>
               <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-primary" onclick="window.location.href='EditGenero.html?id=${genero.id}'">Editar Género</button>
-                <button class="btn btn-secondary" onclick="window.location.href='artistasAdm.html?generoId=${genero.id}'">Ver Artistas</button>
+                <button class="btn btn-edit-gen" onclick="window.location.href='EditGenero.html?id=${genero.id}'">Editar Género</button>
+                <button class="btn btn-ver-artistas" onclick="window.location.href='artistasAdm.html?generoId=${genero.id}'">Ver Artistas</button>
               </div>
             </div>
           `;

@@ -5,7 +5,7 @@ body {
   }
   
   .genre-card {
-    background-color: 	#a4ff00;
+    background-color: 	#817f7f69;
     border-radius: 12px;
     padding: 15px;
     text-align: center;
@@ -29,10 +29,51 @@ body {
   .genre-card h5 {
     margin-top: 10px;
     font-size: 1.1rem;
-    color: #333;
+    color: white;
   }
   
-  .container {
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
+.container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.header-personalizado {
+  background-color: #1E1E1E; /* azul oscuro */
+  position: relative;
+  z-index: 1;
+}
+.nav-links a:hover {
+  text-decoration: underline;
+}
+.neon-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background-color: #15ffc4;
+  box-shadow: 0 0 10px #15ffc4;
+}
+.btn-ver-artistas {
+  background-color: #fff14b;
+  color: black;
+  border: none;
+  box-shadow:0 0 10px #fff14b;
+}
+.btn-ver-artistas:hover,
+.btn-ver-artistas:focus {
+  background-color: #b8ad34;
+  box-shadow:0 0 10px #b8ad34;
+}
+
+.btn-edit-gen {/*verde antiuguo 24c158*/
+  background-color: #90c55a;
+  color: black;
+  border: none;
+  box-shadow:
+    0 0 10px #90c55a;
+}
+.btn-edit-gen:hover,
+.btn-edit-gen:focus {
+  background-color: #1b9644;
+  box-shadow:0 0 10px #1b9644;
+}
