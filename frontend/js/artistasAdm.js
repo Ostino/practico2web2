@@ -33,9 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p><strong>Género:</strong> ${artista.genero.nombre}</p>
             </div>
         <div class="d-grid gap-2 mt-3">
-            <button class="btn btn-primary" onclick="window.location.href='editartista.html?id=${artista.id}'">Editar Artista</button>
-            <button class="btn btn-secondary" onclick="window.location.href='albumAdm.html?artistaId=${artista.id}'">Ver Album</button>
-            <button class="btn btn-secondary" onclick="window.location.href='CreateAlbum.html?artistaId=${artista.id}'">Añadir Album</button>
+            <button class="btn btn-edit-gen" onclick="window.location.href='editartista.html?id=${artista.id}'">Editar Artista</button>
+            <button class="btn btn-ver-artistas" onclick="window.location.href='albumAdm.html?artistaId=${artista.id}'">Ver Album</button>
+            <button class="btn btn-edit-gen" onclick="window.location.href='CreateAlbum.html?artistaId=${artista.id}'">Añadir Album</button>
         </div>
         </div>
         `;

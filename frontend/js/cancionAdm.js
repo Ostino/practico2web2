@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
           li.innerHTML = `
             <span>${cancion.nombre}</span>
             <div>
-              <button class="btn btn-sm btn-warning me-2" onclick="editarCancion(${cancion.id})">Editar</button>
-              <button class="btn btn-sm btn-danger" onclick="eliminarCancion(${cancion.id})">Eliminar</button>
+              <button class="btn btn-edit-gen me-2" onclick="editarCancion(${cancion.id})">Editar</button>
+              <button class="btn btn-ver-artistas" onclick="eliminarCancion(${cancion.id})">Eliminar</button>
             </div>
           `;
           lista.appendChild(li);

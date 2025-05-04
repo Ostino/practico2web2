@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             <img src="http://localhost:3000/imagenes/${album.imagen}" alt="${album.nombre}" class="img-fluid">
             <h5>${album.nombre}</h5>
             <div class="d-grid gap-2 mt-3">
-            <button class="btn btn-primary" onclick="window.location.href='editalbum.html?albumId=${album.id}'">Editar Album</button>
-            <button class="btn btn-secondary" onclick="window.location.href='cancionAdm.html?albumId=${album.id}'">Ver Canciones</button>
-            <button class="btn btn-secondary" onclick="window.location.href='CreateCancion.html?albumId=${album.id}'">Añadir Canciones</button>
+            <button class="btn btn-edit-gen" onclick="window.location.href='editalbum.html?albumId=${album.id}'">Editar Album</button>
+            <button class="btn btn-ver-artistas" onclick="window.location.href='cancionAdm.html?albumId=${album.id}'">Ver Canciones</button>
+            <button class="btn btn-edit-gen" onclick="window.location.href='CreateCancion.html?albumId=${album.id}'">Añadir Canciones</button>
             </div>
           </div>
         `;
