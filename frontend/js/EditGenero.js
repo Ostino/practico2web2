@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const data = await response.json();
         alert('Género actualizado correctamente: ' + data.nombre);
     
-        // Asegura la redirección después del alert
         setTimeout(() => {
           window.location.href = 'http://127.0.0.1:5500/frontend/home.html';
         }, 0);
@@ -89,7 +88,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   
       alert('Género eliminado correctamente.');
   
-      // Asegura redirección luego del alert
       setTimeout(() => {
         window.location.href = 'http://127.0.0.1:5500/frontend/home.html';
       }, 0);

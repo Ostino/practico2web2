@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
   
         alert('Álbum registrado con éxito.');
-        // window.location.href = 'lista_artistas.html';
       } catch (error) {
         console.error('Error al registrar el álbum:', error);
         alert('No se pudo registrar el álbum.');

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then(generos => {
-        container.innerHTML = ""; // Limpia el contenido anterior si lo hubiera
+        container.innerHTML = "";
   
         generos.forEach(genero => {
           const card = document.createElement("div");

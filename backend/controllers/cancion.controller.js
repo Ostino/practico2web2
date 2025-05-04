@@ -3,7 +3,6 @@ const path = require('path');
 const Cancion = require('../models/cancion.model');
 const Album = require('../models/album.model');
 
-// Crear canción
 const crearCancion = async (req, res) => {
   try {
     const { nombre, albumId } = req.body;
@@ -13,7 +12,7 @@ const crearCancion = async (req, res) => {
     const nuevoNombreArchivo = `${nombre}_${albumId}${extension}`;
     const nuevaRuta = path.join('cancionesBackend', nuevoNombreArchivo);
 
-    fs.renameSync(req.file.path, nuevaRuta); // Renombra el archivo
+    fs.renameSync(req.file.path, nuevaRuta);
 
     const nuevaCancion = await Cancion.create({
       nombre,
@@ -27,7 +26,6 @@ const crearCancion = async (req, res) => {
   }
 };
 
-// Obtener todas las canciones
 const obtenerCanciones = async (req, res) => {
   try {
     const canciones = await Cancion.findAll({ include: Album });
@@ -37,7 +35,6 @@ const obtenerCanciones = async (req, res) => {
   }
 };
 
-// Obtener una canción por ID
 const obtenerCancionPorId = async (req, res) => {
   try {
     const cancion = await Cancion.findByPk(req.params.id, { include: Album });
@@ -48,7 +45,6 @@ const obtenerCancionPorId = async (req, res) => {
   }
 };
 
-// Actualizar canción
 const actualizarCancion = async (req, res) => {
   try {
     const { id } = req.params;
@@ -60,23 +56,20 @@ const actualizarCancion = async (req, res) => {
 
     const nuevoNombre = req.body.nombre || cancion.nombre;
     const archivoNuevo = req.file;
-    let nombreArchivoFinal = cancion.archivo; // por defecto, no cambia
+    let nombreArchivoFinal = cancion.archivo;
 
-    // Si se cambia el archivo .mp3
     if (archivoNuevo) {
-      // Borrar el archivo viejo
       const rutaVieja = path.join(__dirname, '..', 'cancionesBackend', cancion.archivo);
       if (fs.existsSync(rutaVieja)) {
         fs.unlinkSync(rutaVieja);
       }
 
-      // Renombrar archivo a "nombre_IdAlbum.mp3"
-      const extension = path.extname(archivoNuevo.originalname); // .mp3
+      const extension = path.extname(archivoNuevo.originalname); 
       nombreArchivoFinal = `${nuevoNombre}_${cancion.albumId}${extension}`;
       const rutaNueva = path.join(__dirname, '..', 'cancionesBackend', nombreArchivoFinal);
       fs.renameSync(archivoNuevo.path, rutaNueva);
     }
-    // Si no se cambió el archivo, pero se cambió el nombre
+
     else if (nuevoNombre !== cancion.nombre) {
       const viejaRuta = path.join(__dirname, '..', 'cancionesBackend', cancion.archivo);
       const extension = path.extname(cancion.archivo);
@@ -88,7 +81,6 @@ const actualizarCancion = async (req, res) => {
       }
     }
 
-    // Actualizar los datos en la base
     await cancion.update({
       nombre: nuevoNombre,
       archivo: nombreArchivoFinal
@@ -115,8 +107,6 @@ const obtenerCancionesPorAlbum = async (req, res) => {
   }
 };
 
-
-// Eliminar canción
 const eliminarCancion = async (req, res) => {
   try {
     const cancion = await Cancion.findByPk(req.params.id);

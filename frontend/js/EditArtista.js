@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // 1. Cargar géneros
   fetch("http://localhost:3000/api/generos")
     .then(res => res.json())
     .then(generos => {
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
         generoSelect.appendChild(option);
       });
 
-      // 2. Luego cargar el artista
       return fetch(`http://localhost:3000/api/artistas/${artistaId}`);
     })
     .then(res => {
@@ -39,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
       nombreInput.value = artista.nombre;
       generoSelect.value = artista.generoId;
 
-      // Mostrar imagen actual debajo del formulario
       if (artista.nombreDeFoto) {
         const previewContainer = document.createElement('div');
         const imagenPreview = document.createElement('img');
@@ -58,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("No se pudo cargar la información.");
     });
 
-  // Envío del formulario
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -83,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  // Botón de eliminar
   eliminarBtn.addEventListener("click", () => {
     if (!confirm("¿Estás seguro de eliminar este artista?")) return;
 

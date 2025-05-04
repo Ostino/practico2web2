@@ -16,7 +16,6 @@ const crearGenero = async (req, res) => {
     const nuevoNombreArchivo = `${nombre}${extension}`;
     const nuevaRuta = path.join(__dirname, '..', 'imagenesBackend', nuevoNombreArchivo);
 
-    // Mover/renombrar archivo a la carpeta final
     fs.renameSync(archivo.path, nuevaRuta);
 
     const nuevoGenero = await GeneroMusical.create({
@@ -88,7 +87,6 @@ const eliminarGenero = async (req, res) => {
   try {
     const idGenero = parseInt(req.params.id);
 
-    // No se puede borrar el género pivote
     if (idGenero === 7) {
       return res.status(400).json({ mensaje: 'No se puede eliminar el género pivote (ID 7)' });
     }
@@ -98,22 +96,18 @@ const eliminarGenero = async (req, res) => {
       return res.status(404).json({ mensaje: 'Género no encontrado' });
     }
 
-    // Buscar artistas que tienen este género
     const artistas = await Artista.findAll({ where: { generoId: idGenero } });
 
-    // Reemplazar por el género pivote (ID 7)
     for (const artista of artistas) {
       artista.generoId = 7;
       await artista.save();
     }
 
-    // Borrar imagen si existe
     const rutaImagen = path.join('imagenesBackend', genero.nombreDeImagen);
     if (fs.existsSync(rutaImagen)) {
       fs.unlinkSync(rutaImagen);
     }
 
-    // Eliminar género
     await genero.destroy();
 
     res.json({ mensaje: 'Género eliminado, artistas actualizados y su imagen ha sido borrada' });

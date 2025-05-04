@@ -1,12 +1,11 @@
 let albumes = [];
 let albumActualIndex = 0;
-let modalBootstrap = null; // ← Solo una instancia del modal
-
+let modalBootstrap = null;
 document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(window.location.search);
   const artistaId = params.get("artistaId");
   const albumesContainer = document.getElementById("albumesContainer");
-  modalBootstrap = new bootstrap.Modal(document.getElementById("albumModal")); // ← Instanciamos una vez
+  modalBootstrap = new bootstrap.Modal(document.getElementById("albumModal"));
 
   try {
     const res = await fetch(`http://localhost:3000/api/albumes/artista/${artistaId}`);
@@ -26,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       card.addEventListener("click", () => {
         albumActualIndex = index;
-        abrirModal(albumActualIndex, true); // true: mostrar modal
+        abrirModal(albumActualIndex, true);
       });
 
       albumesContainer.appendChild(card);
@@ -44,7 +43,6 @@ async function abrirModal(index, mostrar = false) {
   const audioPlayer = document.getElementById("audioPlayer");
   const flechasContainer = document.getElementById("flechasContainer");
 
-  // Actualizar contenido
   modalImagen.src = `http://localhost:3000/imagenes/${album.imagen}`;
   modalTitulo.textContent = album.nombre;
   listaCanciones.innerHTML = "";
@@ -71,14 +69,13 @@ async function abrirModal(index, mostrar = false) {
     console.error("Error cargando canciones:", err);
   }
 
-  // Mostrar u ocultar flechas
   flechasContainer.innerHTML = `
     <button class="btn btn-outline-dark me-2" ${index === 0 ? "disabled" : ""} onclick="cambiarAlbum(-1)">←</button>
     <button class="btn btn-outline-dark" ${index === albumes.length - 1 ? "disabled" : ""} onclick="cambiarAlbum(1)">→</button>
   `;
 
   if (mostrar) {
-    modalBootstrap.show(); // Solo mostrar si se invoca desde click
+    modalBootstrap.show();
   }
 }
 
@@ -87,6 +84,6 @@ function cambiarAlbum(direccion) {
 
   if (nuevoIndex >= 0 && nuevoIndex < albumes.length) {
     albumActualIndex = nuevoIndex;
-    abrirModal(albumActualIndex, false); // No mostrar nuevamente
+    abrirModal(albumActualIndex, false);
   }
 }

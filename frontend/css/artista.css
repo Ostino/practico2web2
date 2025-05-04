@@ -1,6 +1,6 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: 		#1E1E1E ; /* fondo gris claro */
+    background-color: 		#1E1E1E ; 
     color:aliceblue;
   }
   
@@ -37,7 +37,7 @@ body {
   padding-bottom: 20px;
 }
 .header-personalizado {
-  background-color: #1E1E1E; /* azul oscuro */
+  background-color: #1E1E1E; 
   position: relative;
   z-index: 1;
 }
@@ -65,7 +65,7 @@ body {
   box-shadow:0 0 10px #b8ad34;
 }
 
-.btn-edit-gen {/*verde antiuguo 24c158*/
+.btn-edit-gen {
   background-color: #90c55a;
   color: black;
   border: none;
@@ -79,11 +79,11 @@ body {
 }
 .footer-con-imagen {
   position: relative;
-  height: 60px; /* Ajusta según el tamaño de la imagen */
+  height: 60px; 
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  background-color: #1E1E1E; /* Opcional, o transparente */
+  background-color: #1E1E1E;
 }
 
 .footer-con-imagen img {

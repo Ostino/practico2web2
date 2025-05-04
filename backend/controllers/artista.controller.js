@@ -17,10 +17,8 @@ const crearArtista = async (req, res) => {
     const nuevoNombre = `${nombre}_art${extension}`;
     const rutaDestino = path.join(__dirname, '../imagenesBackend', nuevoNombre);
 
-    // Mover imagen y renombrar
     fs.renameSync(imagen.path, rutaDestino);
 
-    // Guardar en BD
     const nuevoArtista = await Artista.create({
       nombre,
       nombreDeFoto: nuevoNombre,
@@ -49,7 +47,6 @@ const actualizarArtista = async (req, res) => {
     if (generoId) cambios.generoId = generoId;
 
     if (imagen) {
-      // Eliminar imagen anterior
       const rutaAnterior = path.join(__dirname, '../imagenesBackend', artista.nombreDeFoto);
       if (fs.existsSync(rutaAnterior)) {
         fs.unlinkSync(rutaAnterior);

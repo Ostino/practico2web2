@@ -7,11 +7,9 @@ const crearAlbum = async (req, res) => {
     const { nombre, artistaId } = req.body;
     const imagen = req.file;
     console.log(nombre, artistaId )
-    // Crear álbum primero
     if (!imagen || !nombre || !artistaId) {
       return res.status(400).json({ mensaje: 'Faltan datos obligatorios' });
     }
-    // Renombrar la imagen con el ID del álbum
     const extension = path.extname(imagen.originalname);
     const nuevoNombre = `${nombre}_${artistaId}${extension}`;
     const rutaDestino = path.join(__dirname, '../imagenesBackend', nuevoNombre);
@@ -66,7 +64,6 @@ const obtenerAlbumsPorArtista = async (req, res) => {
   }
 };
 
-
 const actualizarAlbum = async (req, res) => {
   try {
     const album = await Album.findByPk(req.params.id);
@@ -76,22 +73,18 @@ const actualizarAlbum = async (req, res) => {
     const nuevoArtistaId = req.body.artistaId || album.artistaId;
     const nuevaImagen = req.file;
 
-    let nombreImagenFinal = album.imagen; // nombre actual por defecto
+    let nombreImagenFinal = album.imagen;
 
-    // Si hay una nueva imagen
     if (nuevaImagen) {
-      // Borrar la imagen vieja
       const rutaVieja = path.join('imagenesBackend', album.imagen);
       if (fs.existsSync(rutaVieja)) fs.unlinkSync(rutaVieja);
 
-      // Guardar con nuevo nombre
       const extension = path.extname(nuevaImagen.originalname);
       nombreImagenFinal = `${nuevoNombre}_${nuevoArtistaId}${extension}`;
       const rutaNueva = path.join('imagenesBackend', nombreImagenFinal);
       fs.renameSync(nuevaImagen.path, rutaNueva);
     }
 
-    // Si solo cambió el nombre (y no se envió nueva imagen)
     else if (nuevoNombre !== album.nombre || nuevoArtistaId !== album.artistaId) {
       const rutaVieja = path.join('imagenesBackend', album.imagen);
       const extension = path.extname(album.imagen);
@@ -103,7 +96,6 @@ const actualizarAlbum = async (req, res) => {
       }
     }
 
-    // Actualizar los datos en el modelo
     album.nombre = nuevoNombre;
     album.artistaId = nuevoArtistaId;
     album.imagen = nombreImagenFinal;

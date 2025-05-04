@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // Obtener datos del álbum y autocompletar el formulario
   try {
     const response = await fetch(`http://localhost:3000/api/albumes/${albumId}`);
     if (!response.ok) throw new Error("No se pudo obtener el álbum");
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const data = await response.json();
     document.getElementById('nombre').value = data.nombre;
 
-    // Mostrar imagen actual con tu método
     if (data.imagen) {
       const previewContainer = document.createElement('div');
       const imagenPreview = document.createElement('img');
@@ -35,7 +33,6 @@ form.appendChild(previewContainer);
     alert('No se pudo cargar la información del álbum.');
   }
 
-  // Enviar actualización del álbum
   document.getElementById('formAlbum').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -79,7 +76,7 @@ form.appendChild(previewContainer);
       }
   
       alert('Álbum eliminado con éxito.');
-      window.location.href = 'homeAdm.html'; // Cambia esto si deseas redirigir a otra página
+      window.location.href = 'homeAdm.html';
     } catch (error) {
       console.error('Error al eliminar el álbum:', error);
       alert('No se pudo eliminar el álbum.');

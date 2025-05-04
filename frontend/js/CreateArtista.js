@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
   
       alert('Artista registrado con éxito');
-      //window.location.href = 'lista_artistas.html'; // o cambia por tu ruta deseada
     } catch (error) {
       console.error('Error al registrar el artista:', error);
       alert('No se pudo registrar el artista.');

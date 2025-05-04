@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return res.json();
     })
     .then(artistas => {
-      container.innerHTML = ""; // Limpia contenido anterior
+      container.innerHTML = "";
 
       if (artistas.length === 0) {
         container.innerHTML = `<p class="text-center">No hay artistas para este género.</p>`;

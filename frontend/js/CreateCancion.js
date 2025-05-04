@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formCancion");
   
-    // Obtener albumId desde la URL
     const params = new URLSearchParams(window.location.search);
     const albumId = params.get("albumId");
   
@@ -19,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const formData = new FormData();
       formData.append("nombre", nombre);
       formData.append("audio", archivo);
-      formData.append("albumId", albumId); // enviar el ID del álbum
+      formData.append("albumId", albumId);
   
       try {
         const response = await fetch("http://localhost:3000/api/canciones/", {

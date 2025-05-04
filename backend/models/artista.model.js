@@ -29,7 +29,6 @@ const Artista = sequelize.define('Artista', {
     timestamps: false
   });
   
-  // Asociación (opcional pero recomendable para consultas JOIN)
   Artista.belongsTo(GeneroMusical, { foreignKey: 'generoId', as: 'genero' });
   
   module.exports = Artista;

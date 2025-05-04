@@ -4,7 +4,6 @@ const params = new URLSearchParams(window.location.search);
     if (!id) {
       alert("No se proporcionó el ID de la canción.");
     } else {
-      // Obtener datos actuales
       fetch(`http://localhost:3000/api/canciones/${id}`)
         .then(res => res.json())
         .then(data => {
@@ -15,7 +14,6 @@ const params = new URLSearchParams(window.location.search);
           alert("No se pudo cargar la canción.");
         });
 
-      // Manejar submit
       document.getElementById("formCancion").addEventListener("submit", e => {
         e.preventDefault();
         const form = e.target;
@@ -28,7 +26,6 @@ const params = new URLSearchParams(window.location.search);
         .then(res => {
           if (res.ok) {
             alert("Canción actualizada correctamente.");
-            //window.location.href = `listaCanciones.html?albumId=...`; // Coloca el albumId correcto si lo tienes
           } else {
             alert("Error al actualizar la canción.");
           }

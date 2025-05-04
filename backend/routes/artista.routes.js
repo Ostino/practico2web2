@@ -3,8 +3,7 @@ const router = express.Router();
 const artistaController = require('../controllers/artista.controller');
 const upload = require('../middlewares/multerArtista');
 
-//http://localhost:3000/api/artistas/genero/:id
-//http://localhost:3000/api/artistas/:id
+//http://localhost:3000/api/artistas/
 router.post('/', upload.single('imagen'), artistaController.crearArtista);
 
 router.get('/', artistaController.obtenerArtistas);

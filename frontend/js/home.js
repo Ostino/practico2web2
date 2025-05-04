@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then(generos => {
-        container.innerHTML = ""; // Limpia el contenido anterior si lo hubiera
+        container.innerHTML = "";
   
         generos.forEach(genero => {
           if (genero.id === 7) return;
@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
           `;
   
-          // Agrega el evento de clic
           card.querySelector(".genre-card").addEventListener("click", () => {
             window.location.href = `artistas.html?generoId=${genero.id}`;
           });

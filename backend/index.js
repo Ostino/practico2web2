@@ -8,19 +8,19 @@ const albumRoutes = require('./routes/album.routes');
 const cancionRoutes= require('./routes/cancion.routes')
 const path = require('path');
 
-app.use(cors()); // Permite que el frontend pueda hacer peticiones
+app.use(cors());
 const PORT = 3000;
 async function iniciarServidor() {
     try {
       await sequelize.authenticate();
-      console.log('✅ Conexión exitosa a la base de datos');
+      console.log('Conexión exitosa a la base de datos');
       await sequelize.sync();
       const PORT = 3000;
       app.listen(PORT, () => {
         console.log(`Servidor backend corriendo en http://localhost:${PORT}`);
       });
     } catch (error) {
-      console.error('❌ Error al conectar con la base de datos:', error);
+      console.error('Error al conectar con la base de datos:', error);
     }
   }
   iniciarServidor();
