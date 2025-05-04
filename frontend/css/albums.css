@@ -40,7 +40,7 @@ body {
   transition: transform 0.3s;
   background-color: rgba(255, 255, 255, 0.1); /* fondo blanco con opacidad */
   border: none;
-  color: white;
+  color: aliceblue;
 }
 
 .album-card:hover {
@@ -48,7 +48,7 @@ body {
 }
 
 .album-card img {
-  height: 180px;
+  height: 200px;
   object-fit: cover;
 }
 
@@ -60,11 +60,12 @@ body {
 /* Estilo para el header del modal */
 .modal-header {
   background-color: #1E1E1E;
-  color: white;
+  color: aliceblue;
+  border-bottom: none;
 }
 
 .modal-header .modal-title {
-  color: white;
+  color: aliceblue;
 }
 
 .modal-header .btn-close {
@@ -73,9 +74,30 @@ body {
 .card {
   background-color: rgba(255, 255, 255, 0.1); /* blanco con 10% de opacidad */
   border: none; /* opcional: quita bordes si lo ves mejor visualmente */
-  color: white; /* opcional: mejora contraste si el fondo es oscuro */
+  color: aliceblue; /* opcional: mejora contraste si el fondo es oscuro */
 }
 .modal-body {
   background: linear-gradient(to right, rgba(144, 197, 90, 0.2), rgba(255, 241, 75, 0.2)), #000000cc;
-  color: white; /* si quieres que el texto sea blanco para mayor contraste */
+  color: aliceblue; /* si quieres que el texto sea blanco para mayor contraste 6060d6  */
+}
+.modal-footer {
+  border-top: none;
+  background-color: #1E1E1E;
+}
+.btn-outline-dark{
+  background-color: #6060d6;
+  color: aliceblue;
+}
+.footer-con-imagen {
+  position: relative;
+  height: 60px; /* Ajusta según el tamaño de la imagen */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: #1E1E1E; /* Opcional, o transparente */
+}
+
+.footer-con-imagen img {
+  height: 185%;
+  object-fit: contain;
 }

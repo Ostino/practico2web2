@@ -29,7 +29,7 @@ body {
   .genre-card h5 {
     margin-top: 10px;
     font-size: 1.1rem;
-    color: white;
+    color: aliceblue;
   }
   
 .container {
@@ -76,4 +76,17 @@ body {
 .btn-edit-gen:focus {
   background-color: #1b9644;
   box-shadow:0 0 10px #1b9644;
+}
+.footer-con-imagen {
+  position: relative;
+  height: 60px; /* Ajusta según el tamaño de la imagen */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: #1E1E1E; /* Opcional, o transparente */
+}
+
+.footer-con-imagen img {
+  height: 185%;
+  object-fit: contain;
 }
