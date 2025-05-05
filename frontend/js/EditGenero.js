@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Género actualizado correctamente: ' + data.nombre);
     
         setTimeout(() => {
-          window.location.href = 'http://127.0.0.1:5500/frontend/home.html';
+          window.location.href = 'http://127.0.0.1:5500/frontend/homeAdm.html';
         }, 0);
     
       } catch (error) {
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       alert('Género eliminado correctamente.');
   
       setTimeout(() => {
-        window.location.href = 'http://127.0.0.1:5500/frontend/home.html';
+        window.location.href = 'http://127.0.0.1:5500/frontend/homeAdm.html';
       }, 0);
   
     } catch (error) {

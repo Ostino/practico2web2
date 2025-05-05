@@ -75,8 +75,12 @@ body {
   color: aliceblue; 
 }
 .modal-body {
-  background: linear-gradient(to right, rgba(144, 197, 90, 0.2), rgba(255, 241, 75, 0.2)), #000000cc;
-  color: aliceblue; 
+  display: flex;
+  background: linear-gradient(to right, rgba(144, 197, 90, 0.2), rgba(255, 241, 75, 0.2));
+  background-color: black;
+  padding: 20px;
+  align-items: center; /* Esto centra verticalmente el contenido */
+  gap: 20px; /* Espacio entre imagen y lista */
 }
 .modal-footer {
   border-top: none;
