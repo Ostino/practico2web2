@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!res.ok) throw new Error("Error al eliminar el artista");
         alert("Artista eliminado correctamente.");
         setTimeout(() => {
-          window.location.href = 'http://127.0.0.1:5500/frontend/home.html';
+          window.location.href = 'http://127.0.0.1:5500/frontend/homeAdm.html';
         }, 0);
       })
       .catch(err => {

@@ -2,7 +2,7 @@ const Artista = require('../models/artista.model');
 const fs = require('fs');
 const path = require('path');
 const GeneroMusical = require('../models/genero.model');
-
+const Album = require('../models/album.model')
 
 const crearArtista = async (req, res) => {
   try {
@@ -68,20 +68,31 @@ const actualizarArtista = async (req, res) => {
 
 const eliminarArtista = async (req, res) => {
   try {
-    const artista = await Artista.findByPk(req.params.id);
+    const artista = await Artista.findByPk(req.params.id, {
+      include: [{ model: Album }]
+    });
 
     if (!artista) {
       return res.status(404).json({ mensaje: 'Artista no encontrado' });
     }
 
-    const rutaImagen = path.join(__dirname, '../imagenesBackend', artista.nombreDeFoto);
-    if (fs.existsSync(rutaImagen)) {
-      fs.unlinkSync(rutaImagen);
+    for (const album of artista.Albums || []) {
+      const rutaImagenAlbum = path.join(__dirname, '../imagenesBackend', album.imagen);
+      if (fs.existsSync(rutaImagenAlbum)) {
+        fs.unlinkSync(rutaImagenAlbum);
+      }
+    }
+
+    const rutaImagenArtista = path.join(__dirname, '../imagenesBackend', artista.nombreDeFoto);
+    if (fs.existsSync(rutaImagenArtista)) {
+      fs.unlinkSync(rutaImagenArtista);
     }
 
     await artista.destroy();
-    res.json({ mensaje: 'Artista eliminado' });
+
+    res.json({ mensaje: 'Artista y sus imágenes asociadas fueron eliminados correctamente' });
   } catch (error) {
+    console.error('Error al eliminar artista:', error);
     res.status(500).json({ mensaje: 'Error al eliminar el artista', error });
   }
 };
